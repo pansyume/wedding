@@ -73,12 +73,12 @@
   <!-- 主內容區 -->
   <div id="main-content" class="opacity-0 transition-opacity duration-700">
     
-    <!-- 1. 首頁 (主視覺 - 加厚下方刷淡漸層) -->
+    <!-- 1. 首頁 -->
     <header class="relative min-h-[85vh] flex flex-col items-center justify-end text-center pb-8 overflow-hidden">
-      <!-- 主視覺照片 (後台控制) -->
+      <!-- 主視覺照片 -->
       <div id="hero-bg" class="absolute inset-0 z-0 bg-cover bg-top bg-no-repeat" style="background-image: url('https://drive.google.com/uc?export=view&id=1u_XNxRWzl12fH66-A2HiycR6xm3BGGOj');"></div>
       
-      <!-- 漸層修改：把高度拉高到 70%，並讓漸層更濃，完美墊在文字底下 -->
+      <!-- 加厚漸層 -->
       <div class="absolute bottom-0 w-full h-[70%] bg-gradient-to-t from-[#fff9fa] via-[#fff9fa]/95 to-transparent z-0"></div>
 
       <div class="relative z-10 max-w-sm mx-auto w-full px-6 pt-16">
@@ -105,7 +105,7 @@
 
     <main class="max-w-md mx-auto px-4 space-y-12 mt-6">
 
-      <!-- 2. 我們的故事 (自動生成區塊) -->
+      <!-- 2. 我們的故事 -->
       <section id="our-story" class="pt-2">
         <div class="text-center mb-8">
           <span class="text-xs uppercase tracking-widest text-rose-400 font-semibold">Love Story</span>
@@ -119,7 +119,7 @@
         </div>
       </section>
 
-      <!-- 3. 登記花絮相簿 (自動生成區塊) -->
+      <!-- 3. 登記花絮相簿 -->
       <section id="gallery" class="pt-6 border-t border-rose-100/50 mt-10">
         <div class="text-center mb-6">
           <span class="text-xs uppercase tracking-widest text-rose-400 font-semibold">Memories</span>
@@ -214,14 +214,13 @@
         document.body.classList.remove("overflow-hidden");
         mainContent.classList.remove("opacity-0");
         
-        // 強制讓網頁滾動回到最頂部，不受手機鍵盤影響
+        // 強制讓網頁滾動回到最頂部
         window.scrollTo(0, 0); 
         
         loadData(); // 載入留言與後台設定
       }, 500);
     }
 
-    // 讀取後台資料與留言
     async function loadData() {
       const refreshIcon = document.getElementById("refresh-icon");
       if (refreshIcon) refreshIcon.classList.add("animate-spin");
@@ -241,7 +240,6 @@
       }
     }
 
-    // 將後台設定動態生成到網頁中
     function applyConfig(config) {
       if (!config) return;
       
@@ -251,7 +249,7 @@
         document.getElementById('entrance-overlay').style.backgroundImage = `linear-gradient(to bottom, rgba(255,249,250,0.8), rgba(255,249,250,1)), url('${config['主視覺照片']}')`;
       }
       
-      // 動態生成故事區塊 (自動尋找 故事1, 故事2, 故事3... 直到沒有為止)
+      // 動態生成故事區塊
       if (config['故事1_標題']) {
         let storyHtml = '';
         let i = 1;
@@ -275,7 +273,7 @@
         document.getElementById('story-container').innerHTML = storyHtml;
       }
 
-      // 動態生成相簿花絮 (自動尋找 花絮照片1, 花絮照片2... 直到沒有為止)
+      // 動態生成相簿花絮
       if (config['花絮照片1']) {
         let galleryHtml = '';
         let j = 1;
@@ -302,7 +300,6 @@
         return;
       }
       
-      // 在時間後面加上 (中原標準時間)
       listEl.innerHTML = list.map(item => `
         <div class="p-3.5 rounded-xl bg-gray-50/50 border border-rose-100/60 shadow-sm space-y-1.5">
           <div class="flex items-center justify-between">
@@ -310,7 +307,7 @@
               <span class="font-bold text-xs text-gray-800">${escapeHtml(item.name)}</span>
               <span class="text-[10px] px-2 py-0.5 rounded-full bg-rose-100/50 text-rose-500">${escapeHtml(item.relation || '賓客')}</span>
             </div>
-            <span class="text-[9px] text-gray-400">${item.time ? escapeHtml(item.time) + ' (中原標準時間)' : ''}</span>
+            <span class="text-[9px] text-gray-400">${item.time ? escapeHtml(item.time) : ''}</span>
           </div>
           <p class="text-xs text-gray-600 leading-relaxed break-words">${escapeHtml(item.message)}</p>
         </div>
