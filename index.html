@@ -4,13 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Karsten & Emily | 婚宴現場與祝福</title>
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+TC:wght@300;400;600&display=swap" rel="stylesheet">
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <script>
@@ -18,165 +15,87 @@
       theme: {
         extend: {
           colors: {
-            rose: {
-              50: '#fff5f7',
-              100: '#ffe4e8',
-              200: '#fecdd6',
-              300: '#fea3b4',
-              400: '#fb7185',
-              500: '#f43f5e',
-            }
+            rose: { 50: '#fff5f7', 100: '#ffe4e8', 200: '#fecdd6', 300: '#fea3b4', 400: '#fb7185', 500: '#f43f5e' }
           },
-          fontFamily: {
-            serif: ['"Cormorant Garamond"', '"Noto Serif TC"', 'serif'],
-          }
+          fontFamily: { serif: ['"Cormorant Garamond"', '"Noto Serif TC"', 'serif'] }
         }
       }
     }
   </script>
   <style>
-    body {
-      font-family: 'Noto Serif TC', serif;
-      background-color: #fff9fa;
-      color: #4a4a4a;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .en-title {
-      font-family: 'Cormorant Garamond', serif;
-    }
-    .petal {
-      position: fixed;
-      background-color: #ffd6df;
-      border-radius: 150% 0 150% 0;
-      opacity: 0.5;
-      pointer-events: none;
-      z-index: 40;
-      animation: fall linear infinite;
-    }
-    @keyframes fall {
-      0% { transform: translate(0, -10px) rotate(0deg); opacity: 0.8; }
-      100% { transform: translate(60px, 100vh) rotate(360deg); opacity: 0; }
-    }
-    
-    /* 隱藏捲軸但可滾動 */
-    .hide-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .hide-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
+    body { font-family: 'Noto Serif TC', serif; background-color: #fff9fa; color: #4a4a4a; -webkit-tap-highlight-color: transparent; }
+    .en-title { font-family: 'Cormorant Garamond', serif; }
+    .petal { position: fixed; background-color: #ffd6df; border-radius: 150% 0 150% 0; opacity: 0.5; pointer-events: none; z-index: 40; animation: fall linear infinite; }
+    @keyframes fall { 0% { transform: translate(0, -10px) rotate(0deg); opacity: 0.8; } 100% { transform: translate(60px, 100vh) rotate(360deg); opacity: 0; } }
+    .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #fff5f7; border-radius: 10px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #fecdd6; border-radius: 10px; }
   </style>
 </head>
 <body class="antialiased pb-16 selection:bg-rose-200 overflow-hidden">
 
-  <!-- 櫻花飄落背景動態 -->
   <div id="petal-container"></div>
 
-  <!-- ==================== 登入互動層 (Entrance Overlay) ==================== -->
+  <!-- 登入互動層 -->
   <div id="entrance-overlay" class="fixed inset-0 z-50 bg-[#fff9fa] flex flex-col items-center justify-center p-6 min-h-screen transition-opacity duration-500 bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(255,249,250,0.8), rgba(255,249,250,1)), url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&auto=format&fit=crop&q=80');">
-    
-    <!-- 第一層：輸入大名與關係 -->
+    <!-- 第一層 -->
     <div id="step-1" class="w-full max-w-sm bg-white/90 backdrop-blur-md p-7 rounded-3xl shadow-lg border border-rose-100 text-center transform transition-all duration-300">
       <h2 class="text-2xl font-bold text-gray-800 mb-2 font-serif">歡迎來到<br>凱笙 & 詩涵的婚禮</h2>
       <p class="text-[13px] text-gray-500 mb-6">請先讓我們知道您是哪位貴賓</p>
-      
       <div class="space-y-4 text-left">
         <div>
           <label class="block text-xs font-semibold text-gray-600 mb-1.5">請問您的大名是？</label>
-          <input type="text" id="entry-name" required placeholder="例如：伴娘 婷婷" 
-            class="w-full px-4 py-3 text-sm rounded-xl border border-rose-200 bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 transition-all">
+          <input type="text" id="entry-name" required placeholder="例如：伴娘 婷婷" class="w-full px-4 py-3 text-sm rounded-xl border border-rose-200 bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 transition-all">
         </div>
-        
         <div>
           <label class="block text-xs font-semibold text-gray-600 mb-1.5">您與新人的關係？</label>
           <div class="grid grid-cols-2 gap-2 text-sm text-center">
-            <label class="cursor-pointer">
-              <input type="radio" name="entry-relation" value="新郎親友" checked class="peer sr-only">
-              <div class="py-2.5 rounded-xl border border-rose-200 peer-checked:bg-rose-400 peer-checked:text-white text-gray-600 transition-all">新郎親友</div>
-            </label>
-            <label class="cursor-pointer">
-              <input type="radio" name="entry-relation" value="新娘親友" class="peer sr-only">
-              <div class="py-2.5 rounded-xl border border-rose-200 peer-checked:bg-rose-400 peer-checked:text-white text-gray-600 transition-all">新娘親友</div>
-            </label>
+            <label class="cursor-pointer"><input type="radio" name="entry-relation" value="新郎親友" checked class="peer sr-only"><div class="py-2.5 rounded-xl border border-rose-200 peer-checked:bg-rose-400 peer-checked:text-white text-gray-600 transition-all">新郎親友</div></label>
+            <label class="cursor-pointer"><input type="radio" name="entry-relation" value="新娘親友" class="peer sr-only"><div class="py-2.5 rounded-xl border border-rose-200 peer-checked:bg-rose-400 peer-checked:text-white text-gray-600 transition-all">新娘親友</div></label>
           </div>
         </div>
-        
-        <button type="button" onclick="nextStep()" class="w-full py-3.5 mt-2 rounded-xl bg-rose-400 hover:bg-rose-500 text-white font-medium shadow-md shadow-rose-300/40 transition-all active:scale-95">
-          下一步
-        </button>
+        <button type="button" onclick="nextStep()" class="w-full py-3.5 mt-2 rounded-xl bg-rose-400 hover:bg-rose-500 text-white font-medium shadow-md shadow-rose-300/40 transition-all active:scale-95">下一步</button>
       </div>
     </div>
 
-    <!-- 第二層：寫下祝福 -->
+    <!-- 第二層 -->
     <div id="step-2" class="w-full max-w-sm bg-white/90 backdrop-blur-md p-7 rounded-3xl shadow-lg border border-rose-100 text-center hidden transform transition-all duration-300">
       <h2 class="text-xl font-bold text-gray-800 mb-2 font-serif">寫下您的祝福</h2>
       <p class="text-[13px] text-gray-500 mb-5">您的祝福將永久保存在我們的紀念冊中 💕</p>
-      
       <div class="space-y-4 text-left">
-        <div>
-          <textarea id="entry-msg" rows="4" required placeholder="寫下對凱笙與詩涵的祝福..." 
-            class="w-full px-4 py-3 text-sm rounded-xl border border-rose-200 bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 transition-all"></textarea>
-        </div>
-        
-        <button type="button" id="entry-submit-btn" onclick="submitEntry()" class="w-full py-3.5 rounded-xl bg-rose-400 hover:bg-rose-500 text-white font-medium shadow-md shadow-rose-300/40 flex items-center justify-center gap-2 transition-all active:scale-95">
-          <i data-lucide="send" class="w-4 h-4"></i>
-          <span>送出祝福並進入首頁</span>
-        </button>
-        
-        <button type="button" onclick="enterSite()" class="w-full py-2 text-[13px] text-gray-400 hover:text-gray-600 underline text-center block">
-          先跳過，直接進入首頁
-        </button>
+        <textarea id="entry-msg" rows="4" required placeholder="寫下對凱笙與詩涵的祝福..." class="w-full px-4 py-3 text-sm rounded-xl border border-rose-200 bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 transition-all"></textarea>
+        <button type="button" id="entry-submit-btn" onclick="submitEntry()" class="w-full py-3.5 rounded-xl bg-rose-400 hover:bg-rose-500 text-white font-medium shadow-md shadow-rose-300/40 flex items-center justify-center gap-2 transition-all active:scale-95"><i data-lucide="send" class="w-4 h-4"></i><span>送出祝福並進入首頁</span></button>
+        <button type="button" onclick="enterSite()" class="w-full py-2 text-[13px] text-gray-400 hover:text-gray-600 underline text-center block">先跳過，直接進入首頁</button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== 網站主內容 (Main Content) ==================== -->
+  <!-- 主內容區 -->
   <div id="main-content" class="opacity-0 transition-opacity duration-700">
     
-    <!-- 1. 首頁 (Hero Section - 上方照片向下刷淡) -->
+    <!-- 1. 首頁 (主視覺) -->
     <header class="relative min-h-[65vh] flex flex-col items-center justify-end text-center pb-12 overflow-hidden">
-      
-      <!-- 頂部照片 -->
-      <!-- ⚠️ 你可以把這裡的 background-image 網址換成你們自己的婚紗照圖片網址 -->
-      <div class="absolute inset-0 z-0 bg-cover bg-top bg-no-repeat" style="background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&auto=format&fit=crop&q=80');"></div>
-      
-      <!-- 向下刷淡的漸層特效 (融合到背景色 #fff9fa) -->
+      <!-- 主視覺照片 (後台控制) -->
+      <div id="hero-bg" class="absolute inset-0 z-0 bg-cover bg-top bg-no-repeat" style="background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&auto=format&fit=crop&q=80');"></div>
       <div class="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-[#fff9fa]/80 to-[#fff9fa]"></div>
 
       <div class="relative z-10 max-w-sm mx-auto w-full px-6 pt-32">
         <div class="inline-flex items-center gap-1.5 px-3 py-1 mb-3 rounded-full bg-rose-200/50 text-rose-500 text-xs tracking-widest uppercase">
-          <i data-lucide="heart" class="w-3.5 h-3.5 fill-rose-400"></i>
-          <span>Wedding Celebration</span>
-          <i data-lucide="heart" class="w-3.5 h-3.5 fill-rose-400"></i>
+          <i data-lucide="heart" class="w-3.5 h-3.5 fill-rose-400"></i><span>Wedding Celebration</span><i data-lucide="heart" class="w-3.5 h-3.5 fill-rose-400"></i>
         </div>
-        
-        <!-- 英文名字 -->
-        <h1 class="en-title text-4xl sm:text-5xl font-semibold tracking-wide text-gray-800 mb-1">
-          Karsten <span class="text-rose-400 italic font-light">&</span> Emily
-        </h1>
-        
-        <!-- 中文姓名 -->
-        <p class="text-lg tracking-[0.25em] text-gray-700 mb-4 font-semibold">
-          黃凱笙 <span class="text-rose-300 mx-1">•</span> 林詩涵
-        </p>
+        <h1 class="en-title text-4xl sm:text-5xl font-semibold tracking-wide text-gray-800 mb-1">Karsten <span class="text-rose-400 italic font-light">&</span> Emily</h1>
+        <p class="text-lg tracking-[0.25em] text-gray-700 mb-4 font-semibold">黃凱笙 <span class="text-rose-300 mx-1">•</span> 林詩涵</p>
 
-        <!-- 宴客時間與地點 -->
-        <div class="bg-white/85 backdrop-blur-md shadow-sm border border-rose-100 rounded-2xl p-4 mt-4 space-y-2.5 text-sm text-gray-600 text-left w-[90%] mx-auto">
-          <div class="flex items-start gap-3 text-gray-700">
-            <i data-lucide="clock" class="w-4 h-4 text-rose-500 mt-0.5 flex-shrink-0"></i>
-            <div>
-              <span class="block font-medium text-rose-500">宴客時間</span>
-              <span class="text-xs">11:30 入席 | 12:00 開席</span>
-            </div>
+        <!-- 宴客資訊 -->
+        <div class="bg-white/85 backdrop-blur-md shadow-sm border border-rose-100 rounded-2xl p-5 mt-4 space-y-4 text-sm text-gray-600 text-center w-[90%] mx-auto">
+          <div class="flex flex-col items-center justify-center gap-1.5 text-gray-700">
+            <div class="flex items-center gap-1.5 text-rose-500 font-medium"><i data-lucide="clock" class="w-4 h-4"></i><span>宴客時間</span></div>
+            <span class="text-[13px] text-gray-800 font-medium tracking-wide">11:30 入席 | 12:00 開席</span>
           </div>
-          <div class="w-full h-px bg-rose-100"></div>
-          <div class="flex items-start gap-3 text-gray-700">
-            <i data-lucide="map-pin" class="w-4 h-4 text-rose-500 mt-0.5 flex-shrink-0"></i>
-            <div>
-              <span class="block font-medium text-rose-500">宴客地點</span>
-              <span class="text-xs leading-relaxed block">晶宴會館 峇里斯莊園(新莊館)<br>C1 劇場</span>
-            </div>
+          <div class="w-full h-px bg-rose-100/80"></div>
+          <div class="flex flex-col items-center justify-center gap-1.5 text-gray-700">
+            <div class="flex items-center gap-1.5 text-rose-500 font-medium"><i data-lucide="map-pin" class="w-4 h-4"></i><span>宴客地點</span></div>
+            <span class="text-[13px] leading-relaxed text-gray-800 font-medium">晶宴會館 峇里斯莊園(新莊館)<br>C1 劇場</span>
           </div>
         </div>
       </div>
@@ -184,33 +103,7 @@
 
     <main class="max-w-md mx-auto px-4 space-y-12 mt-2">
 
-      <!-- 2. 親友祝福牆 (只顯示留言列表) -->
-      <section id="guestbook" class="scroll-mt-4">
-        <div class="text-center mb-6">
-          <span class="text-xs uppercase tracking-widest text-rose-400 font-semibold">Wishes</span>
-          <h2 class="text-2xl font-bold text-gray-800 mt-1">親友祝福牆</h2>
-          <div class="h-0.5 w-8 bg-rose-300 mx-auto mt-2 mb-4"></div>
-        </div>
-
-        <div class="bg-white rounded-2xl p-4 shadow-sm border border-rose-100">
-          <div class="flex items-center justify-between text-xs text-gray-500 px-1 mb-4">
-            <span>來自現場親友的祝福 (<span id="comment-count">0</span>)</span>
-            <button id="refresh-btn" type="button" class="flex items-center gap-1 text-rose-500 hover:text-rose-600 p-1 bg-rose-50 rounded-full px-2">
-              <i data-lucide="rotate-cw" class="w-3 h-3" id="refresh-icon"></i> 刷新
-            </button>
-          </div>
-
-          <!-- 留言列表區塊 (限制高度，可內部滑動) -->
-          <div id="comments-list" class="space-y-3 max-h-[50vh] overflow-y-auto hide-scrollbar pr-1">
-            <div class="text-center py-8 text-gray-400 text-xs">
-              <i data-lucide="loader-2" class="w-5 h-5 animate-spin mx-auto mb-2 text-rose-400"></i>
-              載入祝福中...
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 3. 我們的故事 (時間軸) -->
+      <!-- 2. 我們的故事 (後台控制) -->
       <section id="our-story" class="pt-2">
         <div class="text-center mb-8">
           <span class="text-xs uppercase tracking-widest text-rose-400 font-semibold">Love Story</span>
@@ -222,114 +115,116 @@
           <!-- 故事 1 -->
           <div class="relative">
             <span class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 rounded-full bg-rose-400 ring-4 ring-rose-100"></span>
-            <span class="text-[11px] font-semibold text-rose-500 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200">2020 年 初夏</span>
-            <h3 class="text-base font-bold text-gray-800 mt-2.5">偶然的相遇</h3>
-            <p class="text-xs text-gray-600 mt-1.5 leading-relaxed">
-              一個雨天的午後，因為一把拿錯的雨傘，讓我們在彼此的生命裡寫下了第一章節。
-            </p>
+            <span id="story1-time" class="text-[11px] font-semibold text-rose-500 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200">2020 年 初夏</span>
+            <h3 id="story1-title" class="text-base font-bold text-gray-800 mt-2.5">偶然的相遇</h3>
+            <p id="story1-desc" class="text-xs text-gray-600 mt-1.5 leading-relaxed">一個雨天的午後，因為一把拿錯的雨傘，讓我們在彼此的生命裡寫下了第一章節。</p>
             <div class="mt-3 rounded-xl overflow-hidden shadow-sm border border-rose-100">
-              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80" alt="初遇" class="w-full h-36 object-cover">
+              <img id="story1-img" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80" class="w-full h-36 object-cover">
             </div>
           </div>
 
           <!-- 故事 2 -->
           <div class="relative">
             <span class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 rounded-full bg-rose-400 ring-4 ring-rose-100"></span>
-            <span class="text-[11px] font-semibold text-rose-500 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200">2022 年 秋天</span>
-            <h3 class="text-base font-bold text-gray-800 mt-2.5">牽手走過多座城市</h3>
-            <p class="text-xs text-gray-600 mt-1.5 leading-relaxed">
-              從台北到京都的紅葉小徑，我們分享美食、生活中的瑣碎，確定了想一直牽手走下去的心意。
-            </p>
+            <span id="story2-time" class="text-[11px] font-semibold text-rose-500 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200">2022 年 秋天</span>
+            <h3 id="story2-title" class="text-base font-bold text-gray-800 mt-2.5">牽手走過多座城市</h3>
+            <p id="story2-desc" class="text-xs text-gray-600 mt-1.5 leading-relaxed">從台北到京都的紅葉小徑，我們分享美食、生活中的瑣碎，確定了想一直牽手走下去的心意。</p>
             <div class="mt-3 rounded-xl overflow-hidden shadow-sm border border-rose-100">
-              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80" alt="旅行" class="w-full h-36 object-cover">
+              <img id="story2-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80" class="w-full h-36 object-cover">
             </div>
           </div>
 
           <!-- 故事 3 -->
           <div class="relative">
             <span class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 rounded-full bg-rose-400 ring-4 ring-rose-100"></span>
-            <span class="text-[11px] font-semibold text-rose-500 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200">2025 年 跨年夜</span>
-            <h3 class="text-base font-bold text-gray-800 mt-2.5">星空下的求婚</h3>
-            <p class="text-xs text-gray-600 mt-1.5 leading-relaxed">
-              在滿天星斗下，凱笙拿出準備已久的戒指，詩涵紅著眼眶點頭答應，成為彼此一輩子的避風港。
-            </p>
+            <span id="story3-time" class="text-[11px] font-semibold text-rose-500 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200">2025 年 跨年夜</span>
+            <h3 id="story3-title" class="text-base font-bold text-gray-800 mt-2.5">星空下的求婚</h3>
+            <p id="story3-desc" class="text-xs text-gray-600 mt-1.5 leading-relaxed">在滿天星斗下，凱笙拿出準備已久的戒指，詩涵紅著眼眶點頭答應，成為彼此一輩子的避風港。</p>
             <div class="mt-3 rounded-xl overflow-hidden shadow-sm border border-rose-100">
-              <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=600&auto=format&fit=crop&q=80" alt="求婚" class="w-full h-36 object-cover">
+              <img id="story3-img" src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=600&auto=format&fit=crop&q=80" class="w-full h-36 object-cover">
             </div>
           </div>
         </div>
       </section>
 
-      <!-- 4. 登記花絮 (相簿 - 移至最後) -->
+      <!-- 3. 登記花絮相簿 (後台控制) -->
       <section id="gallery" class="pt-6 border-t border-rose-100/50 mt-10">
         <div class="text-center mb-6">
           <span class="text-xs uppercase tracking-widest text-rose-400 font-semibold">Memories</span>
           <h2 class="text-2xl font-bold text-gray-800 mt-1">登記花絮</h2>
           <p class="text-xs text-gray-500 mt-1">蓋下印章那一刻，我們正式結為夫妻 💕</p>
         </div>
-
-        <!-- 照片網格 (點擊可放大) -->
         <div class="grid grid-cols-2 gap-3">
           <div class="overflow-hidden rounded-2xl shadow-sm border border-rose-100 aspect-square cursor-pointer bg-rose-50" onclick="openLightbox(this.querySelector('img').src)">
-            <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover active:scale-95 transition duration-300" alt="花絮照1">
+            <img id="gallery-img1" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover active:scale-95 transition duration-300">
           </div>
           <div class="overflow-hidden rounded-2xl shadow-sm border border-rose-100 aspect-square cursor-pointer bg-rose-50" onclick="openLightbox(this.querySelector('img').src)">
-            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover active:scale-95 transition duration-300" alt="花絮照2">
+            <img id="gallery-img2" src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover active:scale-95 transition duration-300">
           </div>
           <div class="overflow-hidden rounded-2xl shadow-sm border border-rose-100 aspect-square cursor-pointer bg-rose-50" onclick="openLightbox(this.querySelector('img').src)">
-            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover active:scale-95 transition duration-300" alt="花絮照3">
+            <img id="gallery-img3" src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover active:scale-95 transition duration-300">
           </div>
           <div class="overflow-hidden rounded-2xl shadow-sm border border-rose-100 aspect-square cursor-pointer bg-rose-50" onclick="openLightbox(this.querySelector('img').src)">
-            <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover active:scale-95 transition duration-300" alt="花絮照4">
+            <img id="gallery-img4" src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover active:scale-95 transition duration-300">
           </div>
         </div>
         <p class="text-[11px] text-gray-400 text-center mt-3">（點選照片可全螢幕放大預覽）</p>
       </section>
 
-      <!-- 頁尾 -->
-      <footer class="pt-10 text-center text-xs text-gray-400 space-y-1">
+      <!-- 4. 親友祝福牆 -->
+      <section id="guestbook" class="pt-6 border-t border-rose-100/50 mt-10 scroll-mt-4">
+        <div class="text-center mb-6">
+          <span class="text-xs uppercase tracking-widest text-rose-400 font-semibold">Wishes</span>
+          <h2 class="text-2xl font-bold text-gray-800 mt-1">親友祝福牆</h2>
+          <div class="h-0.5 w-8 bg-rose-300 mx-auto mt-2 mb-4"></div>
+        </div>
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-rose-100">
+          <div class="flex items-center justify-between text-xs text-gray-500 px-1 mb-4">
+            <span>來自現場親友的祝福 (<span id="comment-count">0</span>)</span>
+            <button id="refresh-btn" type="button" class="flex items-center gap-1 text-rose-500 hover:text-rose-600 p-1 bg-rose-50 rounded-full px-2">
+              <i data-lucide="rotate-cw" class="w-3 h-3" id="refresh-icon"></i> 刷新
+            </button>
+          </div>
+          <div id="comments-list" class="space-y-3 max-h-[400px] overflow-y-auto custom-scrollbar pr-2">
+            <div class="text-center py-8 text-gray-400 text-xs">
+              <i data-lucide="loader-2" class="w-5 h-5 animate-spin mx-auto mb-2 text-rose-400"></i>
+              載入祝福中...
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="pt-8 text-center text-xs text-gray-400 space-y-1">
         <p>Thank you for celebrating with us today!</p>
         <p class="text-rose-400 font-serif text-sm">Karsten & Emily</p>
       </footer>
     </main>
   </div>
 
-  <!-- 圖片放大預覽彈窗 (Lightbox) -->
+  <!-- 燈箱預覽 -->
   <div id="lightbox" class="fixed inset-0 bg-black/90 z-[60] hidden flex items-center justify-center p-4 transition-all" onclick="closeLightbox()">
     <img id="lightbox-img" src="" class="max-w-full max-h-[85vh] rounded-lg shadow-2xl object-contain">
   </div>
 
   <script>
-    // 你的 Google Apps Script 網址
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbygiVd33X3g7rU1ER_cVtDmgbB20KkwY1knCr84Sgj1MzNta151GUuZrBzx-ARbsfCk7w/exec";
     
-    // 暫存登入資訊
     let guestName = "";
     let guestRelation = "";
 
     lucide.createIcons();
 
-    // ==================== 登入流程控制 ====================
     function nextStep() {
       guestName = document.getElementById("entry-name").value.trim();
       guestRelation = document.querySelector('input[name="entry-relation"]:checked').value;
-      
-      if (!guestName) {
-        alert("請先輸入您的大名喔！");
-        return;
-      }
-      
+      if (!guestName) { alert("請先輸入您的大名喔！"); return; }
       document.getElementById("step-1").classList.add("hidden");
       document.getElementById("step-2").classList.remove("hidden");
     }
 
     async function submitEntry() {
       const message = document.getElementById("entry-msg").value.trim();
-      
-      if (!message) {
-        alert("請寫下您的祝福喔！");
-        return;
-      }
+      if (!message) { alert("請寫下您的祝福喔！"); return; }
 
       const submitBtn = document.getElementById("entry-submit-btn");
       submitBtn.disabled = true;
@@ -337,59 +232,80 @@
       lucide.createIcons();
 
       try {
-        // 背景送出資料給 Google Script (no-cors 模式)
         fetch(GOOGLE_SCRIPT_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "text/plain" },
+          method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" },
           body: JSON.stringify({ name: guestName, relation: guestRelation, message: message })
         });
-        
-        // 給合適的延遲讓使用者看到動畫，然後進入網站
-        setTimeout(() => {
-          enterSite();
-        }, 1200);
-
+        setTimeout(enterSite, 1200);
       } catch (err) {
-        console.error(err);
-        enterSite(); // 如果失敗也讓他們進去
+        enterSite();
       }
     }
 
-    // 進入首頁的特效
     function enterSite() {
       const overlay = document.getElementById("entrance-overlay");
       const mainContent = document.getElementById("main-content");
-      
-      // 淡出登入層
       overlay.classList.add("opacity-0");
-      
       setTimeout(() => {
         overlay.classList.add("hidden");
-        document.body.classList.remove("overflow-hidden"); // 恢復滾動
-        mainContent.classList.remove("opacity-0"); // 顯示主內容
-        
-        // 進入首頁後載入留言清單
-        loadComments();
+        document.body.classList.remove("overflow-hidden");
+        mainContent.classList.remove("opacity-0");
+        loadData(); // 載入留言與後台設定
       }, 500);
     }
 
-    // ==================== 留言板載入 ====================
-    async function loadComments() {
+    // 讀取後台資料與留言
+    async function loadData() {
       const refreshIcon = document.getElementById("refresh-icon");
       if (refreshIcon) refreshIcon.classList.add("animate-spin");
 
       try {
         const response = await fetch(GOOGLE_SCRIPT_URL);
         const resData = await response.json();
+        
         if (resData.status === "success") {
-          renderComments(resData.data);
+          // 1. 替換網頁內容 (從工作表抓下來的設定)
+          applyConfig(resData.config);
+          // 2. 渲染留言
+          renderComments(resData.comments);
         }
       } catch (err) {
-        console.error("讀取留言失敗：", err);
+        console.error("讀取資料失敗：", err);
       } finally {
         if (refreshIcon) refreshIcon.classList.remove("animate-spin");
       }
+    }
+
+    // 替換設定項目的核心邏輯
+    function applyConfig(config) {
+      if (!config) return;
+      
+      // 更新背景相片
+      if (config['主視覺照片']) {
+        document.getElementById('hero-bg').style.backgroundImage = `url('${config['主視覺照片']}')`;
+        document.getElementById('entrance-overlay').style.backgroundImage = `linear-gradient(to bottom, rgba(255,249,250,0.8), rgba(255,249,250,1)), url('${config['主視覺照片']}')`;
+      }
+      
+      // 更新故事文字與照片
+      const fields = ['story1-time', 'story1-title', 'story1-desc', 'story2-time', 'story2-title', 'story2-desc', 'story3-time', 'story3-title', 'story3-desc'];
+      fields.forEach(id => {
+        let key = id.replace('-', '_'); // 轉換成對應的中文 key，需依照您的表單設計微調
+        if (id === 'story1-time') key = '故事1_年份'; if (id === 'story1-title') key = '故事1_標題'; if (id === 'story1-desc') key = '故事1_內容';
+        if (id === 'story2-time') key = '故事2_年份'; if (id === 'story2-title') key = '故事2_標題'; if (id === 'story2-desc') key = '故事2_內容';
+        if (id === 'story3-time') key = '故事3_年份'; if (id === 'story3-title') key = '故事3_標題'; if (id === 'story3-desc') key = '故事3_內容';
+        
+        if (config[key]) document.getElementById(id).innerText = config[key];
+      });
+
+      if (config['故事1_照片']) document.getElementById('story1-img').src = config['故事1_照片'];
+      if (config['故事2_照片']) document.getElementById('story2-img').src = config['故事2_照片'];
+      if (config['故事3_照片']) document.getElementById('story3-img').src = config['故事3_照片'];
+
+      // 更新花絮照片
+      if (config['花絮照片1']) document.getElementById('gallery-img1').src = config['花絮照片1'];
+      if (config['花絮照片2']) document.getElementById('gallery-img2').src = config['花絮照片2'];
+      if (config['花絮照片3']) document.getElementById('gallery-img3').src = config['花絮照片3'];
+      if (config['花絮照片4']) document.getElementById('gallery-img4').src = config['花絮照片4'];
     }
 
     function renderComments(list) {
@@ -401,7 +317,6 @@
         listEl.innerHTML = `<div class="text-center py-6 text-xs text-gray-400 bg-gray-50 rounded-xl border border-gray-100">目前還沒有留言，剛剛您送出的留言稍後就會出現囉！</div>`;
         return;
       }
-
       listEl.innerHTML = list.map(item => `
         <div class="p-3.5 rounded-xl bg-gray-50/50 border border-rose-100/60 shadow-sm space-y-1.5">
           <div class="flex items-center justify-between">
@@ -416,21 +331,14 @@
       `).join('');
     }
 
-    document.getElementById("refresh-btn").addEventListener("click", loadComments);
+    document.getElementById("refresh-btn").addEventListener("click", loadData);
 
-    // ==================== 其他工具 ====================
-    function openLightbox(src) {
-      document.getElementById("lightbox-img").src = src;
-      document.getElementById("lightbox").classList.remove("hidden");
-    }
-    function closeLightbox() {
-      document.getElementById("lightbox").classList.add("hidden");
-    }
+    function openLightbox(src) { document.getElementById("lightbox-img").src = src; document.getElementById("lightbox").classList.remove("hidden"); }
+    function closeLightbox() { document.getElementById("lightbox").classList.add("hidden"); }
 
     function createPetals() {
       const container = document.getElementById('petal-container');
-      const count = 15;
-      for (let i = 0; i < count; i++) {
+      for (let i = 0; i < 15; i++) {
         const petal = document.createElement('div');
         petal.className = 'petal';
         petal.style.left = Math.random() * 100 + 'vw';
@@ -449,10 +357,7 @@
       });
     }
 
-    window.addEventListener("DOMContentLoaded", () => {
-      createPetals();
-      // 注意：loadComments() 現在改為在 enterSite() 進入首頁後才觸發
-    });
+    window.addEventListener("DOMContentLoaded", createPetals);
   </script>
 </body>
 </html>
