@@ -30,6 +30,15 @@
     .custom-scrollbar::-webkit-scrollbar { width: 5px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: #fff5f7; border-radius: 10px; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #fecdd6; border-radius: 10px; }
+    
+    /* 防下載保護樣式 */
+    .no-save {
+      -webkit-touch-callout: none !important; /* 禁用 iOS 長按選單 */
+      -webkit-user-select: none !important;   /* 禁用選取 */
+      user-select: none !important;
+      -webkit-user-drag: none !important;     /* 禁用拖曳 */
+      pointer-events: none !important;        /* 讓瀏覽器忽略這是圖片 */
+    }
   </style>
 </head>
 <body class="antialiased pb-16 selection:bg-rose-200 overflow-hidden">
@@ -165,7 +174,8 @@
 
   <!-- 燈箱預覽 -->
   <div id="lightbox" class="fixed inset-0 bg-black/90 z-[60] hidden flex items-center justify-center p-4 transition-all" onclick="closeLightbox()">
-    <img id="lightbox-img" src="" class="max-w-full max-h-[85vh] rounded-lg shadow-2xl object-contain">
+    <!-- 燈箱圖片也加上防下載保護 -->
+    <img id="lightbox-img" src="" class="max-w-full max-h-[85vh] rounded-lg shadow-2xl object-contain no-save" oncontextmenu="return false;" draggable="false">
   </div>
 
   <script>
@@ -261,13 +271,13 @@
     function applyConfig(config) {
       if (!config) return;
       
-      // 更新背景相片 (如果 Google 試算表中有新設定的主視覺照片，就會覆蓋掉 HTML 預設的相片)
+      // 更新背景相片
       if (config['主視覺照片']) {
         document.getElementById('hero-bg').style.backgroundImage = `url('${config['主視覺照片']}')`;
         document.getElementById('entrance-overlay').style.backgroundImage = `linear-gradient(to bottom, rgba(255,249,250,0.8), rgba(255,249,250,1)), url('${config['主視覺照片']}')`;
       }
       
-      // 動態生成故事區塊
+      // 動態生成故事區塊 (套用 no-save 防下載保護)
       if (config['故事1_標題']) {
         let storyHtml = '';
         let i = 1;
@@ -283,7 +293,7 @@
               <span class="text-[11px] font-semibold text-rose-500 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200">${escapeHtml(time)}</span>
               <h3 class="text-base font-bold text-gray-800 mt-2.5">${escapeHtml(title)}</h3>
               <p class="text-xs text-gray-600 mt-1.5 leading-relaxed">${escapeHtml(desc)}</p>
-              ${img ? `<div class="mt-3 rounded-xl overflow-hidden shadow-sm border border-rose-100"><img src="${img}" class="w-full h-36 object-cover"></div>` : ''}
+              ${img ? `<div class="mt-3 rounded-xl overflow-hidden shadow-sm border border-rose-100"><img src="${img}" class="w-full h-36 object-cover no-save" oncontextmenu="return false;" draggable="false"></div>` : ''}
             </div>
           `;
           i++;
@@ -291,15 +301,15 @@
         document.getElementById('story-container').innerHTML = storyHtml;
       }
 
-      // 動態生成相簿花絮
+      // 動態生成相簿花絮 (套用 no-save 防下載保護)
       if (config['花絮照片1']) {
         let galleryHtml = '';
         let j = 1;
         while (config[`花絮照片${j}`]) {
           let imgUrl = config[`花絮照片${j}`];
           galleryHtml += `
-            <div class="overflow-hidden rounded-2xl shadow-sm border border-rose-100 aspect-square cursor-pointer bg-rose-50" onclick="openLightbox(this.querySelector('img').src)">
-              <img src="${imgUrl}" class="w-full h-full object-cover active:scale-95 transition duration-300">
+            <div class="overflow-hidden rounded-2xl shadow-sm border border-rose-100 aspect-square cursor-pointer bg-rose-50 active:scale-95 transition duration-300" onclick="openLightbox('${imgUrl}')">
+              <img src="${imgUrl}" class="w-full h-full object-cover no-save" oncontextmenu="return false;" draggable="false">
             </div>
           `;
           j++;
