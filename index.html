@@ -276,7 +276,7 @@
         document.getElementById('entrance-overlay').style.backgroundImage = `linear-gradient(to bottom, rgba(255,249,250,0.8), rgba(255,249,250,1)), url('${config['主視覺照片']}')`;
       }
       
-      // 動態生成故事區塊 (加入點擊燈箱效果與防下載)
+      // 動態生成故事區塊 (改為 h-auto 完整比例，不裁切)
       if (config['故事1_標題']) {
         let storyHtml = '';
         let i = 1;
@@ -292,7 +292,7 @@
               <span class="text-[11px] font-semibold text-rose-500 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200">${escapeHtml(time)}</span>
               <h3 class="text-base font-bold text-gray-800 mt-2.5">${escapeHtml(title)}</h3>
               <p class="text-xs text-gray-600 mt-1.5 leading-relaxed">${escapeHtml(desc)}</p>
-              ${img ? `<div class="mt-3 rounded-xl overflow-hidden shadow-sm border border-rose-100 cursor-pointer active:scale-95 transition duration-300" onclick="openLightbox('${img}')"><img src="${img}" class="w-full h-36 object-cover no-save" oncontextmenu="return false;" draggable="false"></div>` : ''}
+              ${img ? `<div class="mt-3 rounded-xl overflow-hidden shadow-sm border border-rose-100 cursor-pointer active:scale-95 transition duration-300" onclick="openLightbox('${img}')"><img src="${img}" class="w-full h-auto no-save" oncontextmenu="return false;" draggable="false"></div>` : ''}
             </div>
           `;
           i++;
@@ -300,7 +300,7 @@
         document.getElementById('story-container').innerHTML = storyHtml;
       }
 
-      // 動態生成相簿花絮 (套用 no-save 防下載保護)
+      // 動態生成相簿花絮
       if (config['花絮照片1']) {
         let galleryHtml = '';
         let j = 1;
